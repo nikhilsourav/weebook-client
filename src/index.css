@@ -1,11 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap');
 * {
-  margin: 0;
   padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
-
+html {
+  scroll-behavior: smooth;
+  height: 100vh;
+}
 body {
-  font-family: 'Roboto', 'Montserrat', 'Cario';
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
