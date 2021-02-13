@@ -4,6 +4,7 @@ import { Card, Typography, Button, CardContent, CardActions, Tooltip } from '@ma
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+
 // moment js
 import moment from 'moment';
 
@@ -13,6 +14,12 @@ import useStyles from './styles';
 const Post = ({ post }) => {
   // mui
   const classes = useStyles();
+
+  // Extract date from _id as createdAt is unreliable
+  const dateFromObjectId = (objectId) => {
+    return new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
+  };
+
   return (
     <Card className={classes.root}>
       <CardContent>
@@ -20,7 +27,7 @@ const Post = ({ post }) => {
           <div className={classes.Info}>
             <Typography className={classes.Name}>{post.creator}</Typography>
             <Typography className={classes.CreatedAt}>
-              {moment(post.createdAt).fromNow()}
+              {moment(dateFromObjectId(post._id)).fromNow()}
             </Typography>
           </div>
           <div>

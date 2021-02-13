@@ -24,7 +24,9 @@ const Form = () => {
     e.preventDefault();
     dispatch(createPost(postData));
   };
-  const clear = () => {};
+  const clear = () => {
+    setPostData({ creator: '', title: '', content: '' });
+  };
 
   return (
     <>
