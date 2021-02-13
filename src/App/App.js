@@ -16,6 +16,12 @@ import Sidebar from '../components/Sidebar/Sidebar';
 // Footer
 import Footer from '../components/Footer/Footer';
 
+// Redux imports
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+// Redux actions
+import { getPosts } from '../redux/actions/posts';
+
 const App = () => {
   // mui
   const classes = useStyles();
@@ -23,6 +29,12 @@ const App = () => {
   const handleTheme = () => {
     setTheme(createMuiTheme({ palette: { primary: blue, type: 'dark' } }));
   };
+  // redux
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
+
   return (
     <ThemeProvider theme={theme}>
       <Paper>

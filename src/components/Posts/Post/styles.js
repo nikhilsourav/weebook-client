@@ -54,7 +54,4 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  SkeletonItem: {
-    marginTop: '10px',
-  },
 }));

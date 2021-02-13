@@ -4,12 +4,13 @@ import { Card, Typography, Button, CardContent, CardActions, Tooltip } from '@ma
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-// mui render skeleton
-import Skeleton from '@material-ui/lab/Skeleton';
+// moment js
+import moment from 'moment';
+
 // styles
 import useStyles from './styles';
 
-const Post = () => {
+const Post = ({ post }) => {
   // mui
   const classes = useStyles();
   return (
@@ -17,8 +18,10 @@ const Post = () => {
       <CardContent>
         <div className={classes.HeadWrapper}>
           <div className={classes.Info}>
-            <Typography className={classes.Name}>Willium olajide olatunji</Typography>
-            <Typography className={classes.CreatedAt}>58 minutes ago</Typography>
+            <Typography className={classes.Name}>{post.creator}</Typography>
+            <Typography className={classes.CreatedAt}>
+              {moment(post.createdAt).fromNow()}
+            </Typography>
           </div>
           <div>
             <Button className={classes.Edit}>
@@ -29,39 +32,26 @@ const Post = () => {
           </div>
         </div>
         <Typography className={classes.Title} variant='h5' component='h2'>
-          Title is like heading got it?
+          {post.title}
         </Typography>
-        <Typography className={classes.Content}>
-          This is the content of this post like it? This is the content of this post like it? This
-          is the content of this post like it? This is the content of this post like it? This is the
-          content of this post like it? This is the content of this post like it? This is the
-          content of this post like it? This is the content of this post like it? This is the
-          content of this post like it? This is the content of this post like it? This is the
-          content of this post like it? 🧡🧡
-        </Typography>
+        <Typography className={classes.Content}>{post.content}</Typography>
       </CardContent>
       <CardActions className={classes.Actions}>
-        <Button>
-          <Tooltip title='like'>
-            <FavoriteIcon />
-          </Tooltip>
-        </Button>
+        <Typography>
+          <Button>
+            <Tooltip title='like'>
+              <FavoriteIcon />
+            </Tooltip>
+          </Button>
+          &nbsp;
+          {post.likeCount}
+        </Typography>
         <Button>
           <Tooltip title='delete'>
             <DeleteIcon />
           </Tooltip>
         </Button>
       </CardActions>
-
-      {/* Render skeleton */}
-      {/* <Typography>
-        {' '}
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={20} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={60} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={200} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={20} />
-        <Skeleton className={classes.SkeletonItem} variant='circle' width={50} height={50} />
-      </Typography> */}
     </Card>
   );
 };
