@@ -16,6 +16,11 @@ export default makeStyles((theme) => ({
   FormHeading: {
     margin: '15px 0',
   },
+  Clear: {
+    position: 'absolute',
+    top: '22px',
+    right: '25px',
+  },
   ButtonSubmit: {
     marginBottom: 10,
   },

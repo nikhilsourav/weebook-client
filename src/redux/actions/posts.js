@@ -12,3 +12,12 @@ export const getPosts = () => async (dispatch) => {
     console.log(error, 'action creation error');
   }
 };
+
+export const createPost = (post) => async (dispatch) => {
+  try {
+    const { data } = await api.createPost(post); // send post data
+    dispatch({ type: CREATE, payload: data });
+  } catch (error) {
+    console.log(error, 'action creation error');
+  }
+};
