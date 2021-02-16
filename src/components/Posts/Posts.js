@@ -11,7 +11,7 @@ import Post from './Post/Post';
 // redux
 import { useSelector } from 'react-redux';
 
-const Posts = () => {
+const Posts = ({ currentId, setCurrentId }) => {
   // mui
   const classes = useStyles();
   // redux
@@ -32,7 +32,7 @@ const Posts = () => {
   ) : (
     <Paper className={classes.Posts}>
       {posts.map((post) => (
-        <Post key={post._id} post={post} />
+        <Post key={post._id} post={post} currentId={currentId} setCurrentId={setCurrentId} />
       ))}
     </Paper>
   );

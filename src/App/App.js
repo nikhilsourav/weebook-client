@@ -29,11 +29,15 @@ const App = () => {
   const handleTheme = () => {
     setTheme(createMuiTheme({ palette: { primary: blue, type: 'dark' } }));
   };
+
+  // prop drilling for update
+  const [currentId, setCurrentId] = useState(null);
+
   // redux
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
-  }, [dispatch]);
+  }, [currentId, dispatch]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -42,10 +46,10 @@ const App = () => {
           <Navbar handleTheme={handleTheme} />
           <Grid container className={classes.GridContainer}>
             <Grid item xs={12} sm={7} md={8}>
-              <Posts />
+              <Posts setCurrentId={setCurrentId} />
             </Grid>
             <Grid item xs={12} sm={5} md={4}>
-              <Sidebar />
+              <Sidebar currentId={currentId} setCurrentId={setCurrentId} />
             </Grid>
           </Grid>
         </Container>

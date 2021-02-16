@@ -11,7 +11,7 @@ import moment from 'moment';
 // styles
 import useStyles from './styles';
 
-const Post = ({ post }) => {
+const Post = ({ post, setCurrentId }) => {
   // mui
   const classes = useStyles();
 
@@ -31,7 +31,7 @@ const Post = ({ post }) => {
             </Typography>
           </div>
           <div>
-            <Button className={classes.Edit}>
+            <Button className={classes.Edit} onClick={() => setCurrentId(post._id)}>
               <Tooltip title='edit'>
                 <MoreHorizIcon />
               </Tooltip>

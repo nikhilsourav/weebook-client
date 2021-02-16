@@ -1,5 +1,5 @@
 // React imports
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // mui imports
 import { TextField, Button, Typography, Tooltip, IconButton } from '@material-ui/core';
 // mui icons
@@ -8,24 +8,40 @@ import ClearAllIcon from '@material-ui/icons/ClearAll';
 // styles
 import useStyles from './styles';
 // redux
-import { useDispatch } from 'react-redux';
-import { createPost } from '../../../redux/actions/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost, updatePost } from '../../../redux/actions/posts';
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
   // mui
   const classes = useStyles();
 
   // Form
   const [postData, setPostData] = useState({ creator: '', title: '', content: '' });
 
+  // find post on click
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((post) => post._id === currentId) : null
+  );
+
+  // populate form value after post found
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post]);
+
   // redux dispatch
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createPost(postData));
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
+    }
+    clear();
   };
   const clear = () => {
     setPostData({ creator: '', title: '', content: '' });
+    setCurrentId(null);
   };
 
   return (
@@ -85,14 +101,14 @@ const Form = () => {
             setPostData({ creator: 'anonymous', ...postData, content: e.target.value })
           }
         />
-        <Tooltip title='yes post this!' placement='top'>
+        <Tooltip title={currentId ? `update this!` : `post this!`} placement='top'>
           <Button
             className={classes.ButtonSubmit}
             color='primary'
             variant='contained'
             type='submit'
           >
-            Post
+            {currentId ? `UPDATE` : `POST`}
           </Button>
         </Tooltip>
       </form>

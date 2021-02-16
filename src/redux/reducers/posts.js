@@ -7,9 +7,9 @@ export default (posts = [], action) => {
       return action.payload;
     case CREATE:
       return [...posts, action.payload]; // all posts and created post
-    case DELETE:
-      return posts;
     case UPDATE:
+      return posts.map((post) => (post._id == action.payload._id ? action.payload : post));
+    case DELETE:
       return posts;
     default:
       return posts;
