@@ -9,6 +9,9 @@ export default makeStyles((theme) => ({
       paddingRight: theme.spacing(1),
     },
   },
+  Skeleton: {
+    marginBottom: '40px',
+  },
   SkeletonItem: {
     marginTop: '10px',
   },
