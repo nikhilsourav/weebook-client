@@ -15,7 +15,7 @@ import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 
 // actions
-import { deletePost } from '../../../redux/actions/posts';
+import { deletePost, likePost } from '../../../redux/actions/posts';
 
 const Post = ({ post, setCurrentId }) => {
   // mui
@@ -54,7 +54,7 @@ const Post = ({ post, setCurrentId }) => {
       </CardContent>
       <CardActions className={classes.Actions}>
         <Typography>
-          <Button>
+          <Button onClick={() => dispatch(likePost(post._id))}>
             <Tooltip title='like'>
               <FavoriteIcon />
             </Tooltip>
