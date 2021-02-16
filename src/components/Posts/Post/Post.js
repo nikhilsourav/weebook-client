@@ -11,9 +11,18 @@ import moment from 'moment';
 // styles
 import useStyles from './styles';
 
+// reducer
+import { useDispatch } from 'react-redux';
+
+// actions
+import { deletePost } from '../../../redux/actions/posts';
+
 const Post = ({ post, setCurrentId }) => {
   // mui
   const classes = useStyles();
+
+  // dispatch action
+  const dispatch = useDispatch();
 
   // Extract date from _id as createdAt is unreliable
   const dateFromObjectId = (objectId) => {
@@ -53,7 +62,7 @@ const Post = ({ post, setCurrentId }) => {
           &nbsp;
           {post.likeCount}
         </Typography>
-        <Button>
+        <Button onClick={() => dispatch(deletePost(post._id))}>
           <Tooltip title='delete'>
             <DeleteIcon />
           </Tooltip>
