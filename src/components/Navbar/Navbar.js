@@ -1,32 +1,57 @@
 // React imports
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // React router
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 // mui imports
-import { AppBar, Toolbar, Typography, Container, Tooltip, IconButton, Button, Avatar} from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Tooltip,
+  IconButton,
+  Button,
+  Avatar,
+} from '@material-ui/core';
 
 // mui icons
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import GitHubIcon from '@material-ui/icons/GitHub';
-// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 // styles
 import useStyles from './styles';
 
+// redux
+import { useDispatch } from 'react-redux';
+import { LOGOUT } from '../../redux/constants/actionConstants';
+
 const Navbar = ({ themeMode, lightMode, darkMode }) => {
   // mui
   const classes = useStyles();
-
+  // redux
+  const dispatch = useDispatch();
+  // history
+  const history = useHistory();
+  // location
+  const location = useLocation();
   // user
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-  console.log(user);
 
+  // logout
+  const logout = () => {
+    dispatch({ type: LOGOUT });
+    history.push('/auth');
+    setUser(null);
+  };
+
+  // render on location change
   useEffect(() => {
-    const token = user?.token;
     setUser(JSON.parse(localStorage.getItem('profile')));
-  }, []);
+  }, [location]);
+
+  // popover
 
   return (
     <>
@@ -54,11 +79,6 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                     <GitHubIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title='logout'>
-                  <IconButton color='inherit'>
-                    <ExitToAppIcon />
-                  </IconButton>
-                </Tooltip>
                 <Tooltip title={user.result.name}>
                   <IconButton color='inherit'>
                     <Avatar
@@ -68,6 +88,11 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                     >
                       {user.result.name.charAt(0)}
                     </Avatar>
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title='logout'>
+                  <IconButton color='inherit' onClick={logout}>
+                    <ExitToAppIcon />
                   </IconButton>
                 </Tooltip>
               </>
