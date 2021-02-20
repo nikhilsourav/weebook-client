@@ -1,7 +1,7 @@
 // React imports
 import { useState, useEffect } from 'react';
 // mui imports
-import { TextField, Button, Typography, Tooltip, IconButton } from '@material-ui/core';
+import { TextField, Button, Typography, Tooltip, IconButton, Paper } from '@material-ui/core';
 // mui icons
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 
@@ -16,7 +16,7 @@ const Form = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
 
   // Form
-  const [postData, setPostData] = useState({ creator: '', title: '', content: '' });
+  const [postData, setPostData] = useState({ title: '', content: '' });
 
   // find post on click
   const post = useSelector((state) =>
@@ -28,22 +28,32 @@ const Form = ({ currentId, setCurrentId }) => {
     if (post) setPostData(post);
   }, [post]);
 
+  // get user from local storage
+  const user = JSON.parse(localStorage.getItem('profile'));
+
   // redux dispatch
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
     }
     clear();
   };
   const clear = () => {
-    setPostData({ creator: '', title: '', content: '' });
+    setPostData({ title: '', content: '' });
     setCurrentId(null);
   };
-
+  // no user?
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.SignIn}>
+        <Typography>Please sign in</Typography>
+      </Paper>
+    );
+  }
   return (
     <>
       <form
@@ -61,28 +71,17 @@ const Form = ({ currentId, setCurrentId }) => {
           </Tooltip>
         </Typography>
         <TextField
-          name='creator'
-          variant='outlined'
-          label='creator'
-          fullWidth
-          placeholder='I am known as 😎...'
-          value={postData.creator}
-          onChange={(e) => setPostData({ ...postData, creator: e.target.value })}
-        />
-        <TextField
           name='title'
           variant='outlined'
           label='title'
           fullWidth
           placeholder={
-            postData.creator
-              ? ` ${postData.creator} plz add a title.. 😊`
+            user?.result?.givenName
+              ? ` ${user?.result?.givenName} plz add a title.. 😊`
               : `add a title.. you can do this! 🙂`
           }
           value={postData.title}
-          onChange={(e) =>
-            setPostData({ creator: 'anonymous', ...postData, title: e.target.value })
-          }
+          onChange={(e) => setPostData({ ...postData, title: e.target.value })}
         />
         <TextField
           name='content'
@@ -90,16 +89,14 @@ const Form = ({ currentId, setCurrentId }) => {
           label='content'
           fullWidth
           placeholder={
-            postData.creator
-              ? `what's in your mind ${postData.creator}? 💭`
+            user?.result?.givenName
+              ? `what's in your mind ${user?.result?.givenName}? 💭`
               : `what's in your mind? 💭`
           }
           multiline
           rows={6}
           value={postData.content}
-          onChange={(e) =>
-            setPostData({ creator: 'anonymous', ...postData, content: e.target.value })
-          }
+          onChange={(e) => setPostData({ ...postData, content: e.target.value })}
         />
         <Tooltip title={currentId ? `update this!` : `post this!`} placement='top'>
           <Button

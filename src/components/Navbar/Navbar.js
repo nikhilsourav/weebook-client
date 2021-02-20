@@ -27,6 +27,9 @@ import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { LOGOUT } from '../../redux/constants/actionConstants';
 
+// jwt decode
+import decode from 'jwt-decode';
+
 const Navbar = ({ themeMode, lightMode, darkMode }) => {
   // mui
   const classes = useStyles();
@@ -48,6 +51,14 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
 
   // render on location change
   useEffect(() => {
+    // logout if token expired
+    const token = user?.token;
+    if (token) {
+      const decodedToken = decode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        logout();
+      }
+    }
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, [location]);
 

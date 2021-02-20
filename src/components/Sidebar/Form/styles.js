@@ -24,4 +24,11 @@ export default makeStyles((theme) => ({
   ButtonSubmit: {
     marginBottom: 10,
   },
+  SignIn: {
+    height: '100%',
+    padding: '30px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));

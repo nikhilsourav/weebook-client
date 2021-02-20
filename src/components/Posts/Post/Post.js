@@ -29,22 +29,27 @@ const Post = ({ post, setCurrentId }) => {
     return new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
   };
 
+  // user
+  const user = JSON.parse(localStorage.getItem('profile'));
+
   return (
     <Card className={classes.root}>
       <CardContent>
         <div className={classes.HeadWrapper}>
           <div className={classes.Info}>
-            <Typography className={classes.Name}>{post.creator}</Typography>
+            <Typography className={classes.Name}>{post.name}</Typography>
             <Typography className={classes.CreatedAt}>
               {moment(dateFromObjectId(post._id)).fromNow()}
             </Typography>
           </div>
           <div>
-            <Button className={classes.Edit} onClick={() => setCurrentId(post._id)}>
-              <Tooltip title='edit'>
-                <MoreHorizIcon />
-              </Tooltip>
-            </Button>
+            {user?.result?.googleId === post.creator && (
+              <Button className={classes.Edit} onClick={() => setCurrentId(post._id)}>
+                <Tooltip title='edit'>
+                  <MoreHorizIcon />
+                </Tooltip>
+              </Button>
+            )}
           </div>
         </div>
         <Typography className={classes.Title} variant='h5' component='h2'>
@@ -54,19 +59,21 @@ const Post = ({ post, setCurrentId }) => {
       </CardContent>
       <CardActions className={classes.Actions}>
         <Typography>
-          <Button onClick={() => dispatch(likePost(post._id))}>
+          <Button disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
             <Tooltip title='like'>
               <FavoriteIcon />
             </Tooltip>
           </Button>
           &nbsp;
-          {post.likeCount}
+          {post.likes.length}
         </Typography>
-        <Button onClick={() => dispatch(deletePost(post._id))}>
-          <Tooltip title='delete'>
-            <DeleteIcon />
-          </Tooltip>
-        </Button>
+        {user?.result?.googleId === post.creator && (
+          <Button onClick={() => dispatch(deletePost(post._id))}>
+            <Tooltip title='delete'>
+              <DeleteIcon />
+            </Tooltip>
+          </Button>
+        )}
       </CardActions>
     </Card>
   );
