@@ -25,6 +25,12 @@ const App = () => {
     setThemeMode('dark');
   };
 
+  // greetings
+  console.log(
+    '%c Thanks for visiting! Have a wonderful day! 🙂',
+    'font-weight: bold; font-size: 20px; background-color: #2196f3; border-radius: 5px; padding: 10px; text-shadow: 2px 2px  rgba(0,0,0,0.5)'
+  );
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>

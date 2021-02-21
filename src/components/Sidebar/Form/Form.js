@@ -63,7 +63,7 @@ const Form = ({ currentId, setCurrentId }) => {
         onSubmit={handleSubmit}
       >
         <Typography variant='h6' className={classes.FormHeading}>
-          My Opinion
+          Drop a note
           <Tooltip title='clear form data' placement='top-start'>
             <IconButton className={classes.Clear} onClick={clear}>
               <ClearAllIcon />

@@ -96,7 +96,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
         <Container maxWidth='lg'>
           <Toolbar>
             <Typography className={classes.Heading} variant='h6'>
-              what I think . . .
+              webook
             </Typography>
             {user ? (
               width < 500 ? (
@@ -160,7 +160,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                       <GitHubIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title={user.result.name}>
+                  <Tooltip title={`signed in as ${user.result.name}`}>
                     <IconButton color='inherit'>
                       <Avatar
                         className={classes.Profile}

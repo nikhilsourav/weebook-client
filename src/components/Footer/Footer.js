@@ -21,7 +21,7 @@ const Footer = () => {
       ) : (
         <Paper elevation={8}>
           <Typography className={classes.BottomGreet} variant='h6'>
-            wow you scroll too much!
+            wow! you scroll too much!
           </Typography>
         </Paper>
       )}

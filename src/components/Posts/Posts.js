@@ -16,7 +16,6 @@ const Posts = ({ currentId, setCurrentId }) => {
   const classes = useStyles();
   // redux
   const posts = useSelector((state) => state.posts);
-  console.log(posts); // initially post = [] is rendered then original one from db
 
   return !posts.length ? (
     <div>
