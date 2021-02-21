@@ -15,7 +15,7 @@ const Footer = () => {
       {location.pathname == '/auth' ? (
         <Paper elevation={8}>
           <Typography className={classes.BottomGreet} variant='h6'>
-            Hello friendly citizen.. sup?
+            Hey there friendly citizen!
           </Typography>
         </Paper>
       ) : (

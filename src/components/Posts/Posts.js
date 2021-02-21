@@ -35,6 +35,14 @@ const Posts = ({ currentId, setCurrentId }) => {
         <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={20} />
         <Skeleton className={classes.SkeletonItem} variant='circle' width={30} height={30} />
       </Typography>
+      <Typography className={classes.Skeleton}>
+        {' '}
+        <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={15} />
+        <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={30} />
+        <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={80} />
+        <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={20} />
+        <Skeleton className={classes.SkeletonItem} variant='circle' width={30} height={30} />
+      </Typography>
     </div>
   ) : (
     <Paper className={classes.Posts}>
