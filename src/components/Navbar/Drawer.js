@@ -17,6 +17,9 @@ const useStyles = makeStyles({
   fullList: {
     width: 'auto',
   },
+  menu: {
+    color: 'whitesmoke',
+  },
 });
 
 const TemporaryDrawer = ({ drawerElements }) => {
@@ -60,7 +63,7 @@ const TemporaryDrawer = ({ drawerElements }) => {
       {['right'].map((anchor) => (
         <React.Fragment key={anchor}>
           <IconButton onClick={toggleDrawer(anchor, true)}>
-            <Menu color='inherit' />
+            <Menu className={classes.menu} />
           </IconButton>
           <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}
