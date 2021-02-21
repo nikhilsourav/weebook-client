@@ -23,6 +23,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // styles
 import useStyles from './styles';
 
+// components
+import MUIDrawer from './Drawer';
+
 // redux
 import { useDispatch } from 'react-redux';
 import { LOGOUT } from '../../redux/constants/actionConstants';
@@ -62,7 +65,30 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, [location]);
 
-  // popover
+  // Window's dimensions
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const useWindowDimensions = () => {
+    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+    useEffect(() => {
+      function handleResize() {
+        setWindowDimensions(getWindowDimensions());
+      }
+
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return windowDimensions;
+  };
+  const { width } = useWindowDimensions();
 
   return (
     <>
@@ -73,40 +99,85 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
               what I think . . .
             </Typography>
             {user ? (
-              <>
-                <Tooltip title='toggle theme'>
-                  {themeMode == 'light' ? (
-                    <IconButton onClick={darkMode} color='inherit'>
-                      <Brightness4Icon />
+              width < 500 ? (
+                <MUIDrawer
+                  drawerElements={[
+                    <div className={classes.NavItem}>
+                      <Typography variant='body2'>Toggle Theme</Typography>
+                      {themeMode == 'light' ? (
+                        <IconButton onClick={darkMode} color='inherit'>
+                          <Brightness4Icon />
+                        </IconButton>
+                      ) : (
+                        <IconButton onClick={lightMode} color='inherit'>
+                          <Brightness7Icon />
+                        </IconButton>
+                      )}
+                    </div>,
+                    <div className={classes.NavItem}>
+                      <Typography variant='body2'>GitHub repository</Typography>
+                      <IconButton color='inherit'>
+                        <GitHubIcon />
+                      </IconButton>
+                    </div>,
+                    <div className={classes.NavItem}>
+                      <Typography variant='body2'>signed in as</Typography>
+                      <IconButton>
+                        <Tooltip title={user.result.name}>
+                          <Avatar
+                            className={classes.Profile}
+                            alt={user.result.name}
+                            src={user.result.imageUrl}
+                          >
+                            {user.result.name.charAt(0)}
+                          </Avatar>
+                        </Tooltip>
+                      </IconButton>
+                    </div>,
+                    <div className={classes.NavItem}>
+                      <Typography variant='body2'>Sign out</Typography>
+                      <IconButton color='inherit' onClick={logout}>
+                        <ExitToAppIcon />
+                      </IconButton>
+                    </div>,
+                  ]}
+                />
+              ) : (
+                <>
+                  <Tooltip title='toggle theme'>
+                    {themeMode == 'light' ? (
+                      <IconButton onClick={darkMode} color='inherit'>
+                        <Brightness4Icon />
+                      </IconButton>
+                    ) : (
+                      <IconButton onClick={lightMode} color='inherit'>
+                        <Brightness7Icon />
+                      </IconButton>
+                    )}
+                  </Tooltip>
+                  <Tooltip title='GitHub repository'>
+                    <IconButton color='inherit'>
+                      <GitHubIcon />
                     </IconButton>
-                  ) : (
-                    <IconButton onClick={lightMode} color='inherit'>
-                      <Brightness7Icon />
+                  </Tooltip>
+                  <Tooltip title={user.result.name}>
+                    <IconButton color='inherit'>
+                      <Avatar
+                        className={classes.Profile}
+                        alt={user.result.name}
+                        src={user.result.imageUrl}
+                      >
+                        {user.result.name.charAt(0)}
+                      </Avatar>
                     </IconButton>
-                  )}
-                </Tooltip>
-                <Tooltip title='GitHub repository'>
-                  <IconButton color='inherit'>
-                    <GitHubIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title={user.result.name}>
-                  <IconButton color='inherit'>
-                    <Avatar
-                      className={classes.Profile}
-                      alt={user.result.name}
-                      src={user.result.imageUrl}
-                    >
-                      {user.result.name.charAt(0)}
-                    </Avatar>
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title='logout'>
-                  <IconButton color='inherit' onClick={logout}>
-                    <ExitToAppIcon />
-                  </IconButton>
-                </Tooltip>
-              </>
+                  </Tooltip>
+                  <Tooltip title='logout'>
+                    <IconButton color='inherit' onClick={logout}>
+                      <ExitToAppIcon />
+                    </IconButton>
+                  </Tooltip>
+                </>
+              )
             ) : (
               <Button variant='outlined' component={Link} to='/auth' color='inherit'>
                 Sign in

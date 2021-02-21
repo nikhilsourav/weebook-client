@@ -10,4 +10,9 @@ export default makeStyles((theme) => ({
     width: theme.spacing(4),
     height: theme.spacing(4),
   },
+  NavItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 }));
