@@ -15,4 +15,9 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  Link: {
+    textDecoration: 'none',
+    color: '#ffffff',
+    WebkitTapHighlightColor: 'transparent',
+  },
 }));

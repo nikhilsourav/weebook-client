@@ -116,9 +116,15 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                     </div>,
                     <div className={classes.NavItem}>
                       <Typography variant='body2'>GitHub repository</Typography>
-                      <IconButton color='inherit'>
-                        <GitHubIcon />
-                      </IconButton>
+                      <a
+                        href='https://github.com/nikhilsourav/weebook-client'
+                        target='_blank'
+                        className={classes.Link}
+                      >
+                        <IconButton color='inherit'>
+                          <GitHubIcon />
+                        </IconButton>
+                      </a>
                     </div>,
                     <div className={classes.NavItem}>
                       <Typography variant='body2'>signed in as</Typography>
@@ -156,9 +162,15 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                     )}
                   </Tooltip>
                   <Tooltip title='GitHub repository'>
-                    <IconButton color='inherit'>
-                      <GitHubIcon />
-                    </IconButton>
+                    <a
+                      href='https://github.com/nikhilsourav/weebook-client'
+                      target='_blank'
+                      className={classes.Link}
+                    >
+                      <IconButton color='inherit'>
+                        <GitHubIcon />
+                      </IconButton>
+                    </a>
                   </Tooltip>
                   <Tooltip title={`signed in as ${user.result.name}`}>
                     <IconButton color='inherit'>
