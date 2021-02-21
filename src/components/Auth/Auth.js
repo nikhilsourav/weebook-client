@@ -20,6 +20,9 @@ import Icon from './icon';
 // redux
 import { useDispatch } from 'react-redux';
 
+// environment setup
+import dotenv from 'dotenv';
+
 const Auth = () => {
   // mui
   const classes = useStyles();
@@ -50,6 +53,9 @@ const Auth = () => {
     console.log(`Google sign in was unsuccessful`);
   };
 
+  // env setup
+  dotenv.config();
+
   return (
     <Container component='main' maxWidth='xs' className={classes.AuthBody}>
       <Paper className={classes.paper} elevation={6}>
@@ -60,7 +66,7 @@ const Auth = () => {
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <GoogleLogin
-              clientId='786209744552-1kecl24503a043kbumkke585r63te11r.apps.googleusercontent.com'
+              clientId={process.env.REACT_APP_CLIENT_ID}
               render={(renderProps) => (
                 <Button
                   color='primary'
