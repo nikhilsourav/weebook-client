@@ -19,5 +19,8 @@ export default makeStyles((theme) => ({
     textDecoration: 'none',
     color: '#ffffff',
     WebkitTapHighlightColor: 'transparent',
+    [theme.breakpoints.down('500')]: {
+      color: 'inherit'
+    },
   },
 }));

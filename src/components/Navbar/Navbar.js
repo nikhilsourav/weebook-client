@@ -96,7 +96,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
         <Container maxWidth='lg'>
           <Toolbar>
             <Typography className={classes.Heading} variant='h6'>
-              webook
+              weebook
             </Typography>
             {user ? (
               width < 500 ? (
