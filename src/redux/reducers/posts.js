@@ -6,7 +6,7 @@ export default (posts = [], action) => {
     case FETCH_ALL:
       return action.payload;
     case CREATE:
-      return [...posts, action.payload]; // all posts and created post
+      return [action.payload, ...posts]; // all posts and created post
     case UPDATE:
       return posts.map((post) => (post._id === action.payload._id ? action.payload : post));
     case DELETE:
