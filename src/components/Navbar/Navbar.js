@@ -1,5 +1,5 @@
 // React imports
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 // React router
 import { Link, useHistory, useLocation } from 'react-router-dom';
 // mui imports
@@ -46,11 +46,11 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
   // logout
-  const logout = () => {
+  const logout = useCallback(() => {
     dispatch({ type: LOGOUT });
     history.push('/auth');
     setUser(null);
-  };
+  }, [dispatch, history, setUser]);
 
   // render on location change
   useEffect(() => {
@@ -63,7 +63,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
       }
     }
     setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [location]);
+  }, [location, logout, user?.token]);
 
   // Window's dimensions
   const getWindowDimensions = () => {
@@ -152,7 +152,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
               ) : (
                 <>
                   <Tooltip title='toggle theme'>
-                    {themeMode == 'light' ? (
+                    {themeMode === 'light' ? (
                       <IconButton onClick={darkMode} color='inherit'>
                         <Brightness4Icon />
                       </IconButton>
