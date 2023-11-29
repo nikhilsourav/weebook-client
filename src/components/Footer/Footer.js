@@ -12,7 +12,7 @@ const Footer = () => {
   const location = useLocation();
   return (
     <>
-      {location.pathname == '/auth' ? (
+      {location.pathname === '/auth' ? (
         <Paper elevation={8}>
           <Typography className={classes.BottomGreet} variant='h6'>
             Hey there friendly citizen!

@@ -104,7 +104,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                   drawerElements={[
                     <div className={classes.NavItem}>
                       <Typography variant='body2'>Toggle Theme</Typography>
-                      {themeMode == 'light' ? (
+                      {themeMode === 'light' ? (
                         <IconButton onClick={darkMode} color='inherit'>
                           <Brightness4Icon />
                         </IconButton>
@@ -119,6 +119,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                       <a
                         href='https://github.com/nikhilsourav/weebook-client'
                         target='_blank'
+                        rel='noreferrer'
                         className={classes.Link}
                       >
                         <IconButton color='inherit'>
@@ -164,6 +165,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                   <Tooltip title='GitHub repository'>
                     <a
                       href='https://github.com/nikhilsourav/weebook-client'
+                      rel='noreferrer'
                       target='_blank'
                       className={classes.Link}
                     >

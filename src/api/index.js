@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://weebook-server.herokuapp.com' });
+const API = axios.create({ baseURL: 'https://weebook-ager.onrender.com/' });
 
 // send req with headers
 API.interceptors.request.use((req) => {

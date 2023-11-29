@@ -20,9 +20,6 @@ import Icon from './icon';
 // redux
 import { useDispatch } from 'react-redux';
 
-// environment setup
-import dotenv from 'dotenv';
-
 const Auth = () => {
   // mui
   const classes = useStyles();
@@ -52,9 +49,6 @@ const Auth = () => {
   const googleFailure = () => {
     console.log(`Google sign in was unsuccessful`);
   };
-
-  // env setup
-  dotenv.config();
 
   return (
     <Container component='main' maxWidth='xs' className={classes.AuthBody}>
