@@ -130,13 +130,13 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                     <div className={classes.NavItem}>
                       <Typography variant='body2'>signed in as</Typography>
                       <IconButton>
-                        <Tooltip title={user.result.name}>
+                        <Tooltip title={user?.result?.name}>
                           <Avatar
                             className={classes.Profile}
-                            alt={user.result.name}
-                            src={user.result.imageUrl}
+                            alt={user?.result?.name}
+                            src={user?.result?.imageUrl}
                           >
-                            {user.result.name.charAt(0)}
+                            {user?.result?.name.charAt(0)}
                           </Avatar>
                         </Tooltip>
                       </IconButton>
@@ -174,14 +174,14 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                       </IconButton>
                     </a>
                   </Tooltip>
-                  <Tooltip title={`signed in as ${user.result.name}`}>
+                  <Tooltip title={`signed in as ${user?.result?.name}`}>
                     <IconButton color='inherit'>
                       <Avatar
                         className={classes.Profile}
-                        alt={user.result.name}
-                        src={user.result.imageUrl}
+                        alt={user?.result?.name}
+                        src={user?.result?.imageUrl}
                       >
-                        {user.result.name.charAt(0)}
+                        {user?.result?.name.charAt(0)}
                       </Avatar>
                     </IconButton>
                   </Tooltip>

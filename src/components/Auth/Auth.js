@@ -3,7 +3,12 @@ import { useHistory } from 'react-router-dom';
 
 // mui imports
 import { Container, Avatar, Button, Typography, Paper, Grid } from '@material-ui/core';
-import { GoogleLogin } from 'react-google-login';
+
+// google login
+import { GoogleLogin } from '@react-oauth/google';
+
+// jwt to parse credentials
+import jwt_decode from 'jwt-decode';
 
 // mui icons
 import LockOutlined from '@material-ui/icons/LockOutlined';
@@ -34,9 +39,10 @@ const Auth = () => {
   const handleSubmit = () => {};
 
   // success
-  const googleSuccess = async (res) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
+  const googleSuccess = (res) => {
+    const token = res?.credential;
+    const result = jwt_decode(token);
+
     try {
       dispatch({ type: AUTH, data: { result, token } });
       history.push('/');

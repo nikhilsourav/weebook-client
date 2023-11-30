@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 // React router
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+// Google login
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 // mui theme
 import { Paper, ThemeProvider, createMuiTheme } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
@@ -32,18 +35,20 @@ const App = () => {
   );
 
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <Paper>
-          <Navbar themeMode={themeMode} lightMode={lightMode} darkMode={darkMode} />
-          <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/auth' exact component={Auth} />
-          </Switch>
-          <Footer />
-        </Paper>
-      </ThemeProvider>
-    </BrowserRouter>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <Paper>
+            <Navbar themeMode={themeMode} lightMode={lightMode} darkMode={darkMode} />
+            <Switch>
+              <Route path='/' exact component={Home} />
+              <Route path='/auth' exact component={Auth} />
+            </Switch>
+            <Footer />
+          </Paper>
+        </ThemeProvider>
+      </BrowserRouter>
+    </GoogleOAuthProvider>
   );
 };
 
