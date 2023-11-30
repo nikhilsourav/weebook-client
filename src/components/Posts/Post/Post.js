@@ -43,7 +43,7 @@ const Post = ({ post, setCurrentId }) => {
             </Typography>
           </div>
           <div>
-            {user?.result?.googleId === post.creator && (
+            {user?.result?.sub === post.creator && (
               <Button className={classes.Edit} onClick={() => setCurrentId(post._id)}>
                 <Tooltip title='edit'>
                   <MoreHorizIcon />
@@ -67,7 +67,7 @@ const Post = ({ post, setCurrentId }) => {
           &nbsp;
           {post.likes.length}
         </Typography>
-        {user?.result?.googleId === post.creator && (
+        {user?.result?.sub === post.creator && (
           <Button onClick={() => dispatch(deletePost(post._id))}>
             <Tooltip title='delete'>
               <DeleteIcon />
