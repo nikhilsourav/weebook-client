@@ -94,7 +94,7 @@ const Form = ({ currentId, setCurrentId }) => {
               : `what's in your mind? 💭`
           }
           multiline
-          rows={6}
+          minRows={6}
           value={postData.content}
           onChange={(e) => setPostData({ ...postData, content: e.target.value })}
         />

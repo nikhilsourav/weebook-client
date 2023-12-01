@@ -8,7 +8,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 // mui theme
-import { Paper, ThemeProvider, createMuiTheme } from '@material-ui/core';
+import { Paper, ThemeProvider, createTheme } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
 
 // components
@@ -20,7 +20,7 @@ import Footer from '../components/Footer/Footer';
 const App = () => {
   // mui theme
   const [themeMode, setThemeMode] = useState('dark');
-  const theme = createMuiTheme({ palette: { primary: blue, type: themeMode } });
+  const theme = createTheme({ palette: { primary: blue, type: themeMode } });
   const lightMode = () => {
     setThemeMode('light');
   };
