@@ -7,6 +7,6 @@ export default makeStyles((theme) => ({
     margin: 'auto',
     ...theme.typography.button,
     backgroundColor: theme.palette.background.main,
-    padding: theme.spacing(4),
+    padding: theme.spacing(2),
   },
 }));

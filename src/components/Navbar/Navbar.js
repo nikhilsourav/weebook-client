@@ -111,11 +111,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                       <Typography variant='body2'>signed in as</Typography>
                       <IconButton>
                         <Tooltip title={user?.result?.name}>
-                          <Avatar
-                            className={classes.Profile}
-                            alt={user?.result?.name}
-                            src={user?.result?.imageUrl}
-                          >
+                          <Avatar className={classes.Profile} alt={user?.result?.name}>
                             {user?.result?.name.charAt(0)}
                           </Avatar>
                         </Tooltip>
@@ -156,11 +152,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                   </Tooltip>
                   <Tooltip title={`signed in as ${user?.result?.name}`}>
                     <IconButton color='inherit'>
-                      <Avatar
-                        className={classes.Profile}
-                        alt={user?.result?.name}
-                        src={user?.result?.imageUrl}
-                      >
+                      <Avatar className={classes.Profile} alt={user?.result?.name}>
                         {user?.result?.name.charAt(0)}
                       </Avatar>
                     </IconButton>
