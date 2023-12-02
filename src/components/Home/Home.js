@@ -1,31 +1,18 @@
-// React imports
-import { useState } from 'react';
-// mui imports
+import { useState, useEffect } from 'react';
 import { Container, Grid } from '@material-ui/core';
-
-// styles
-import useStyles from './styles';
-
-// Posts component
-import Posts from '../Posts/Posts';
-// Sidebar component
-import Sidebar from '../Sidebar/Sidebar';
-
-// Redux imports
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-// Redux actions
+
+import useStyles from './styles';
+import Posts from '../Posts/Posts';
+import Sidebar from '../Sidebar/Sidebar';
 import { getPosts } from '../../redux/actions/posts';
 
 const Home = () => {
-  // mui
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  // prop drilling for update
   const [currentId, setCurrentId] = useState(null);
 
-  // redux
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
   }, [currentId, dispatch]);

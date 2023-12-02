@@ -1,45 +1,41 @@
-// React imports
-import React, { useState } from 'react';
-
-// React router
+import { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
-// Google login
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
-// mui theme
 import { Paper, ThemeProvider, createTheme } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
 
-// components
 import Navbar from '../components/Navbar/Navbar';
 import Home from '../components/Home/Home';
 import Auth from '../components/Auth/Auth';
 import Footer from '../components/Footer/Footer';
 
-const App = () => {
-  // mui theme
-  const [themeMode, setThemeMode] = useState('dark');
-  const theme = createTheme({ palette: { primary: blue, type: themeMode } });
-  const lightMode = () => {
-    setThemeMode('light');
-  };
-  const darkMode = () => {
-    setThemeMode('dark');
-  };
-
-  // greetings
+// Greetings
+const greetVisitor = () => {
   console.log(
-    '%c Thanks for visiting! Have a wonderful day! 🙂',
+    '%c Thanks for visiting!',
     'font-weight: bold; font-size: 20px; background-color: #2196f3; border-radius: 5px; padding: 10px; text-shadow: 2px 2px  rgba(0,0,0,0.5)'
   );
+};
+
+// Theme settings
+const useTheme = () => {
+  const [themeMode, setThemeMode] = useState('dark');
+  const theme = createTheme({ palette: { primary: blue, type: themeMode } });
+  const toggleLightMode = () => setThemeMode('light');
+  const toggleDarkMode = () => setThemeMode('dark');
+  return { themeMode, theme, toggleLightMode, toggleDarkMode };
+};
+
+const App = () => {
+  greetVisitor();
+  const { themeMode, theme, toggleLightMode, toggleDarkMode } = useTheme();
 
   return (
     <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <Paper>
-            <Navbar themeMode={themeMode} lightMode={lightMode} darkMode={darkMode} />
+            <Navbar themeMode={themeMode} lightMode={toggleLightMode} darkMode={toggleDarkMode} />
             <Switch>
               <Route path='/' exact component={Home} />
               <Route path='/auth' exact component={Auth} />

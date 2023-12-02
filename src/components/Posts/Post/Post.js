@@ -1,36 +1,25 @@
-// mui imports
 import { Card, Typography, Button, CardContent, CardActions, Tooltip } from '@material-ui/core';
-// mui icons
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-
-// moment js
 import moment from 'moment';
 
-// styles
 import useStyles from './styles';
-
-// reducer
 import { useDispatch } from 'react-redux';
-
-// actions
 import { deletePost, likePost } from '../../../redux/actions/posts';
 
 const Post = ({ post, setCurrentId }) => {
-  // mui
   const classes = useStyles();
-
-  // dispatch action
   const dispatch = useDispatch();
 
   // Extract date from _id as createdAt is unreliable
-  const dateFromObjectId = (objectId) => {
-    return new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
-  };
+  const dateFromObjectId = (objectId) => new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
 
-  // user
+  // Get user from localStorage
   const user = JSON.parse(localStorage.getItem('profile'));
+
+  // Check if the current user is the creator of the post
+  const isCurrentUserCreator = user?.result?.sub === post.creator;
 
   return (
     <Card className={classes.root}>
@@ -43,7 +32,7 @@ const Post = ({ post, setCurrentId }) => {
             </Typography>
           </div>
           <div>
-            {user?.result?.sub === post.creator && (
+            {isCurrentUserCreator && (
               <Button className={classes.Edit} onClick={() => setCurrentId(post._id)}>
                 <Tooltip title='edit'>
                   <MoreHorizIcon />
@@ -67,7 +56,7 @@ const Post = ({ post, setCurrentId }) => {
           &nbsp;
           {post.likes.length}
         </Typography>
-        {user?.result?.sub === post.creator && (
+        {isCurrentUserCreator && (
           <Button onClick={() => dispatch(deletePost(post._id))}>
             <Tooltip title='delete'>
               <DeleteIcon />

@@ -1,49 +1,40 @@
-// mui imports
 import { Paper, Typography } from '@material-ui/core';
-// styles
-import useStyles from './styles';
-// mui render skeleton
+import { useSelector } from 'react-redux';
 import Skeleton from '@material-ui/lab/Skeleton';
 
-// Post component
 import Post from './Post/Post';
+import useStyles from './styles';
 
-// redux
-import { useSelector } from 'react-redux';
+const SkeletonLoader = () => {
+  const classes = useStyles();
+
+  const renderSkeletonItem = () => (
+    <>
+      <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={15} />
+      <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={30} />
+      <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={80} />
+      <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={20} />
+      <Skeleton className={classes.SkeletonItem} variant='circle' width={30} height={30} />
+    </>
+  );
+
+  return (
+    <div>
+      {[1, 2, 3].map((key) => (
+        <Typography key={key} className={classes.Skeleton}>
+          {renderSkeletonItem()}
+        </Typography>
+      ))}
+    </div>
+  );
+};
 
 const Posts = ({ currentId, setCurrentId }) => {
-  // mui
   const classes = useStyles();
-  // redux
   const posts = useSelector((state) => state.posts);
 
   return !posts.length ? (
-    <div>
-      <Typography className={classes.Skeleton}>
-        {' '}
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={15} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={30} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={80} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={20} />
-        <Skeleton className={classes.SkeletonItem} variant='circle' width={30} height={30} />
-      </Typography>
-      <Typography className={classes.Skeleton}>
-        {' '}
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={15} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={30} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={80} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={20} />
-        <Skeleton className={classes.SkeletonItem} variant='circle' width={30} height={30} />
-      </Typography>
-      <Typography className={classes.Skeleton}>
-        {' '}
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={15} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={30} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='100%' height={80} />
-        <Skeleton className={classes.SkeletonItem} variant='rect' width='30%' height={20} />
-        <Skeleton className={classes.SkeletonItem} variant='circle' width={30} height={30} />
-      </Typography>
-    </div>
+    <SkeletonLoader />
   ) : (
     <Paper className={classes.Posts}>
       {posts.map((post) => (

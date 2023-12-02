@@ -1,48 +1,23 @@
-// React router
-import { useHistory } from 'react-router-dom';
-
-// mui imports
-import { Container, Avatar, Button, Typography, Paper, Grid } from '@material-ui/core';
-
-// google login
-import { GoogleLogin } from '@react-oauth/google';
-
-// jwt to parse credentials
 import jwt_decode from 'jwt-decode';
-
-// mui icons
 import LockOutlined from '@material-ui/icons/LockOutlined';
-
-// redux constatns
-import { AUTH } from '../../redux/constants/actionConstants';
-
-// styles
-import useStyles from './styles';
-
-// google svg icon
 import Icon from './icon';
-
-// redux
+import { useHistory } from 'react-router-dom';
+import { Container, Avatar, Button, Typography, Paper, Grid } from '@material-ui/core';
+import { GoogleLogin } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
 
+import useStyles from './styles';
+import { AUTH } from '../../redux/constants/actionConstants';
+
 const Auth = () => {
-  // mui
   const classes = useStyles();
-
-  // redux
   const dispatch = useDispatch();
-
-  // history
   const history = useHistory();
 
-  // form submit
-  const handleSubmit = () => {};
-
-  // success
+  // successful login
   const googleSuccess = (res) => {
     const token = res?.credential;
     const result = jwt_decode(token);
-
     try {
       dispatch({ type: AUTH, data: { result, token } });
       history.push('/');
@@ -51,7 +26,7 @@ const Auth = () => {
     }
   };
 
-  // failure
+  // login failure
   const googleFailure = () => {
     console.log(`Google sign in was unsuccessful`);
   };
@@ -63,7 +38,7 @@ const Auth = () => {
           <LockOutlined />
         </Avatar>
         <Typography variant='h5'>Sign in</Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
+        <form className={classes.form}>
           <Grid container spacing={2}>
             <GoogleLogin
               clientId={process.env.REACT_APP_CLIENT_ID}
