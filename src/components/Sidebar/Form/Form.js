@@ -33,6 +33,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
   // redux dispatch
   const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentId) {
@@ -42,10 +43,12 @@ const Form = ({ currentId, setCurrentId }) => {
     }
     clear();
   };
+
   const clear = () => {
     setPostData({ title: '', content: '' });
     setCurrentId(null);
   };
+
   // no user?
   if (!user?.result?.name) {
     return (
