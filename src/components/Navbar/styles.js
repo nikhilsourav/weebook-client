@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   Heading: {
     flexGrow: 1,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Roboto',
     color: 'rgba(255,255,250,1)',
   },
   Profile: {
@@ -20,7 +20,7 @@ export default makeStyles((theme) => ({
     color: '#ffffff',
     WebkitTapHighlightColor: 'transparent',
     [theme.breakpoints.down('500')]: {
-      color: 'inherit'
+      color: 'inherit',
     },
   },
 }));

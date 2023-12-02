@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 'max(80vh, 600px)',
+    height: '100vh',
   },
   paper: {
     width: '100%',
