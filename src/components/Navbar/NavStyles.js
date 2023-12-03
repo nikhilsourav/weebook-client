@@ -23,4 +23,9 @@ export default makeStyles((theme) => ({
       color: 'inherit',
     },
   },
+  Modal: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 }));

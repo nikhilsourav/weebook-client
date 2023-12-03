@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
   AppBar,
@@ -9,14 +9,18 @@ import {
   IconButton,
   Button,
   Avatar,
+  Modal,
+  Grid,
 } from '@material-ui/core';
 
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AddBoxRoundedIcon from '@material-ui/icons/AddBoxRounded';
 import useStyles from './NavStyles';
 import MUIDrawer from './Drawer';
+import ModalContainer from '../MdEditor/ModalContainer';
 
 import decode from 'jwt-decode';
 import { useDispatch } from 'react-redux';
@@ -28,6 +32,10 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
   const history = useHistory();
   const location = useLocation();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   // logout
   const logout = useCallback(() => {
@@ -83,6 +91,14 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                 <MUIDrawer
                   drawerElements={[
                     <div className={classes.NavItem}>
+                      <Typography variant='body2'>Create Post</Typography>
+                      <Tooltip title='create post'>
+                        <IconButton color='inherit' onClick={handleOpen}>
+                          <AddBoxRoundedIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </div>,
+                    <div className={classes.NavItem}>
                       <Typography variant='body2'>Toggle Theme</Typography>
                       {themeMode === 'light' ? (
                         <IconButton onClick={darkMode} color='inherit'>
@@ -127,6 +143,11 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
                 />
               ) : (
                 <>
+                  <Tooltip title='create post'>
+                    <IconButton color='inherit' onClick={handleOpen}>
+                      <AddBoxRoundedIcon />
+                    </IconButton>
+                  </Tooltip>
                   <Tooltip title='toggle theme'>
                     {themeMode === 'light' ? (
                       <IconButton onClick={darkMode} color='inherit'>
@@ -173,6 +194,17 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
         </Container>
       </AppBar>
       <Toolbar />
+      <Modal
+        className={classes.Modal}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='parent-modal-title'
+        aria-describedby='parent-modal-description'
+      >
+        <Grid item xs={11} sm={8} md={6}>
+          <ModalContainer />
+        </Grid>
+      </Modal>
     </>
   );
 };
