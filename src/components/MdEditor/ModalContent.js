@@ -5,13 +5,16 @@ import ClearAllIcon from '@material-ui/icons/ClearAll';
 
 import useStyles from './ModalContentStyles';
 import { createPost, updatePost } from '../../redux/actions/posts';
+import { USER } from '../../redux/constants/actionConstants';
 
-const Form = ({ currentId, setCurrentId }) => {
+const Form = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const userFromLocalStorage = JSON.parse(localStorage.getItem('profile'));
+  const loggedInUserId = useSelector((state) => state.user);
+
   const selectedPost = useSelector((state) =>
-    currentId ? state.posts.find((post) => post._id === currentId) : null
+    loggedInUserId ? state.posts.find((post) => post._id === loggedInUserId) : null
   );
 
   const [formData, setFormData] = useState({ title: '', content: '' });
@@ -23,13 +26,15 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedData = { ...formData, name: userFromLocalStorage?.result?.name };
-    currentId ? dispatch(updatePost(currentId, updatedData)) : dispatch(createPost(updatedData));
+    loggedInUserId
+      ? dispatch(updatePost(loggedInUserId, updatedData))
+      : dispatch(createPost(updatedData));
     clearForm();
   };
 
   const clearForm = () => {
     setFormData({ title: '', content: '' });
-    setCurrentId(null);
+    dispatch({ type: USER, payload: null });
   };
 
   if (!userFromLocalStorage?.result?.name) {
@@ -75,9 +80,9 @@ const Form = ({ currentId, setCurrentId }) => {
         value={formData.content}
         onChange={(e) => setFormData({ ...formData, content: e.target.value })}
       />
-      <Tooltip title={currentId ? 'Update this!' : 'Post this!'} placement='top'>
+      <Tooltip title={loggedInUserId ? 'Update this!' : 'Post this!'} placement='top'>
         <Button className={classes.ButtonSubmit} color='primary' variant='contained' type='submit'>
-          {currentId ? 'UPDATE' : 'POST'}
+          {loggedInUserId ? 'UPDATE' : 'POST'}
         </Button>
       </Tooltip>
     </form>

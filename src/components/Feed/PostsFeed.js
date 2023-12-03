@@ -32,7 +32,7 @@ const SkeletonLoader = () => {
   );
 };
 
-const Posts = ({ currentId, setCurrentId }) => {
+const Posts = () => {
   const classes = useStyles();
   const posts = useSelector((state) => state.posts);
 
@@ -41,7 +41,7 @@ const Posts = ({ currentId, setCurrentId }) => {
   ) : (
     <Paper className={classes.Posts}>
       {posts.map((post) => (
-        <Post key={post._id} post={post} currentId={currentId} setCurrentId={setCurrentId} />
+        <Post key={post._id} post={post} />
       ))}
     </Paper>
   );

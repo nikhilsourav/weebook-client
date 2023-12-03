@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
-  Sidebar: {
+  ModalContainer: {
     height: 'max(81vh, 550px)',
     width: '90%',
     padding: '15px',

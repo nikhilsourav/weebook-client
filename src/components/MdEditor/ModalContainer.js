@@ -5,16 +5,16 @@ import { Paper, Container } from '@material-ui/core';
 import useStyles from './ModalContainerStyles';
 import Form from './ModalContent';
 
-const Sidebar = ({ currentId, setCurrentId }) => {
+const ModalContainer = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.Sidebar}>
+    <Container className={classes.ModalContainer}>
       <Paper className={classes.Paper}>
-        <Form currentId={currentId} setCurrentId={setCurrentId} />
+        <Form />
       </Paper>
     </Container>
   );
 };
 
-export default Sidebar;
+export default ModalContainer;

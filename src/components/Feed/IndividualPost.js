@@ -7,8 +7,9 @@ import moment from 'moment';
 import useStyles from './IndividualPostStyles';
 import { useDispatch } from 'react-redux';
 import { deletePost, likePost } from '../../redux/actions/posts';
+import { USER } from '../../redux/constants/actionConstants';
 
-const Post = ({ post, setCurrentId }) => {
+const Post = ({ post }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -33,7 +34,10 @@ const Post = ({ post, setCurrentId }) => {
           </div>
           <div>
             {isCurrentUserCreator && (
-              <Button className={classes.Edit} onClick={() => setCurrentId(post._id)}>
+              <Button
+                className={classes.Edit}
+                onClick={() => dispatch({ type: USER, payload: post._id })}
+              >
                 <Tooltip title='edit'>
                   <MoreHorizIcon />
                 </Tooltip>
@@ -57,7 +61,12 @@ const Post = ({ post, setCurrentId }) => {
           {post.likes.length}
         </Typography>
         {isCurrentUserCreator && (
-          <Button onClick={() => dispatch(deletePost(post._id))}>
+          <Button
+            onClick={() => {
+              dispatch(deletePost(post._id));
+              dispatch({ type: USER, payload: null });
+            }}
+          >
             <Tooltip title='delete'>
               <DeleteIcon />
             </Tooltip>
