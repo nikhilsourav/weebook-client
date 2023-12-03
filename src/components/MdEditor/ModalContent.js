@@ -3,8 +3,8 @@ import { TextField, Button, Typography, Tooltip, IconButton, Paper } from '@mate
 import { useDispatch, useSelector } from 'react-redux';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 
-import useStyles from './styles';
-import { createPost, updatePost } from '../../../redux/actions/posts';
+import useStyles from './ModalContentStyles';
+import { createPost, updatePost } from '../../redux/actions/posts';
 
 const Form = ({ currentId, setCurrentId }) => {
   const classes = useStyles();

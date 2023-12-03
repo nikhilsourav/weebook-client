@@ -4,9 +4,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 
-import useStyles from './styles';
+import useStyles from './IndividualPostStyles';
 import { useDispatch } from 'react-redux';
-import { deletePost, likePost } from '../../../redux/actions/posts';
+import { deletePost, likePost } from '../../redux/actions/posts';
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();

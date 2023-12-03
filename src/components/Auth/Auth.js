@@ -5,7 +5,7 @@ import { Container, Avatar, Typography, Paper, Grid } from '@material-ui/core';
 import { GoogleLogin } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
 
-import useStyles from './styles';
+import useStyles from './AuthStyles';
 import { AUTH } from '../../redux/constants/actionConstants';
 
 const Auth = () => {

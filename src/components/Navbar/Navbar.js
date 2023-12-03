@@ -15,7 +15,7 @@ import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import useStyles from './styles';
+import useStyles from './NavStyles';
 import MUIDrawer from './Drawer';
 
 import decode from 'jwt-decode';

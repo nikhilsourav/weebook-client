@@ -1,6 +1,6 @@
 import { Paper, Typography } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
-import useStyles from './styles';
+import useStyles from './FooterStyles';
 
 const Footer = () => {
   const classes = useStyles();

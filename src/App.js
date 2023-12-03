@@ -4,10 +4,10 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Paper, ThemeProvider, createTheme } from '@material-ui/core';
 import blue from '@material-ui/core/colors/blue';
 
-import Navbar from '../components/Navbar/Navbar';
-import Home from '../components/Home/Home';
-import Auth from '../components/Auth/Auth';
-import Footer from '../components/Footer/Footer';
+import Navbar from './components/Navbar/Navbar';
+import Home from './components/Home/Home';
+import Auth from './components/Auth/Auth';
+import Footer from './components/Footer/Footer';
 
 // Greetings
 const greetVisitor = () => {

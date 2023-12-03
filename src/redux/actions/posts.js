@@ -1,4 +1,4 @@
-import * as api from '../../api'; // backend services
+import * as api from '../../Apis/Api.js'; // backend services
 import { FETCH_ALL, DELETE, UPDATE, CREATE } from '../constants/actionConstants';
 
 // Action creators

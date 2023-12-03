@@ -1,9 +1,12 @@
+/*
+ * Container for IndividualPost
+ */
 import { Paper, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import Skeleton from '@material-ui/lab/Skeleton';
 
-import Post from './Post/Post';
-import useStyles from './styles';
+import Post from './IndividualPost';
+import useStyles from './PostsFeedStyles';
 
 const SkeletonLoader = () => {
   const classes = useStyles();

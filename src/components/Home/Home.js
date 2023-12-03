@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { Container, Grid } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
-import useStyles from './styles';
-import Posts from '../Posts/Posts';
-import Sidebar from '../Sidebar/Sidebar';
+import useStyles from './HomeStyles';
+import Posts from '../Feed/PostsFeed';
+import Sidebar from '../MdEditor/ModalContainer';
 import { getPosts } from '../../redux/actions/posts';
 
 const Home = () => {
