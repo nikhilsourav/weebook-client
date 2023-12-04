@@ -54,8 +54,8 @@ const Form = () => {
       onSubmit={handleSubmit}
     >
       <Typography variant='h6' className={classes.FormHeading}>
-        Drop a note
-        <Tooltip title='clear form data' placement='top-start'>
+        Write something
+        <Tooltip title='reset' placement='top-start'>
           <IconButton className={classes.Clear} onClick={clearForm}>
             <ClearAllIcon />
           </IconButton>
@@ -75,7 +75,7 @@ const Form = () => {
         variant='outlined'
         label='content'
         fullWidth
-        placeholder={`What's in your mind ${userFromLocalStorage?.result?.given_name} ? 💭`}
+        placeholder={`What's on your mind ${userFromLocalStorage?.result?.given_name} ? 💭`}
         multiline
         minRows={minRows}
         maxRows={maxRows}
