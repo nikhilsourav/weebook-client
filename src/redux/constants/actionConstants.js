@@ -8,3 +8,4 @@ export const LOGOUT = 'LOGOUT';
 
 export const SET_CURRENT_USER_ID = 'SET_CURRENT_USER_ID ';
 export const INITIATE_POST_EDIT = 'INITIATE_POST_EDIT';
+export const POST_CLICKED = 'POST_CLICKED';

@@ -5,7 +5,7 @@ import ClearAllIcon from '@material-ui/icons/ClearAll';
 
 import useStyles from './ModalContentStyles';
 import { createPost, updatePost } from '../../redux/actions/posts';
-import { SET_CURRENT_USER_ID } from '../../redux/constants/actionConstants';
+import { POST_CLICKED, SET_CURRENT_USER_ID } from '../../redux/constants/actionConstants';
 import { useCalcRows } from '../../Hooks/WindowSize';
 
 const Form = () => {
@@ -27,6 +27,7 @@ const Form = () => {
       ? dispatch(updatePost(currentUserId, updatedData))
       : dispatch(createPost(updatedData));
     clearForm();
+    dispatch({ type: POST_CLICKED, payload: true });
   };
 
   const clearForm = () => {

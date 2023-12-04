@@ -23,7 +23,7 @@ import ModalContainer from '../MdEditor/ModalContainer';
 
 import decode from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
-import { INITIATE_POST_EDIT, LOGOUT } from '../../redux/constants/actionConstants';
+import { INITIATE_POST_EDIT, LOGOUT, POST_CLICKED } from '../../redux/constants/actionConstants';
 import { useWindowDimensions } from '../../Hooks/WindowSize';
 
 const Navbar = ({ themeMode, lightMode, darkMode }) => {
@@ -32,6 +32,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
   const history = useHistory();
   const location = useLocation();
   const hasSelectedEditMode = useSelector((state) => state.user.hasSelectedEditMode);
+  const hasClickedPostBtn = useSelector((state) => state.user.hasClickedPostBtn);
   const { width: windowWidth } = useWindowDimensions();
   const [userFromLocalStorage, setUserFromLocalStorage] = useState(
     JSON.parse(localStorage.getItem('profile'))
@@ -40,7 +41,11 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
   const [hasRendered, setHasRendered] = useState(false);
 
   // modal operations
-  const handleOpen = () => setIsModalOpen(true);
+  const handleOpen = useCallback(() => {
+    setIsModalOpen(true);
+    dispatch({ type: POST_CLICKED, payload: false });
+  }, [dispatch, setIsModalOpen]);
+
   const handleClose = useCallback(() => {
     setIsModalOpen(false);
     dispatch({ type: INITIATE_POST_EDIT, payload: false });
@@ -69,7 +74,13 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
   useEffect(() => {
     if (hasRendered) hasSelectedEditMode ? handleOpen() : handleClose();
     else setHasRendered(true);
-  }, [hasSelectedEditMode, handleClose, hasRendered]);
+  }, [hasSelectedEditMode, handleOpen, handleClose, hasRendered]);
+
+  // render as edit mode is selected by user
+  useEffect(() => {
+    if (hasClickedPostBtn) handleClose();
+    else handleOpen();
+  }, [hasClickedPostBtn, handleOpen, handleClose]);
 
   const renderSmallScreen = () => (
     <MUIDrawer
