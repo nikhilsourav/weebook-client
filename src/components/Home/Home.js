@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Container, Grid } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
+import FloatingActBtn from './FloatingActBtn';
 import useStyles from './HomeStyles';
 import Posts from '../Feed/PostsFeed';
 import { getPosts } from '../../redux/actions/posts';
@@ -21,6 +22,7 @@ const Home = () => {
           <Posts />
         </Grid>
       </Grid>
+      <FloatingActBtn />
     </Container>
   );
 };

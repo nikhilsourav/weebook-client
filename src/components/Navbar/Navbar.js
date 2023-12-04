@@ -23,7 +23,12 @@ import ModalContainer from '../MdEditor/ModalContainer';
 
 import decode from 'jwt-decode';
 import { useDispatch, useSelector } from 'react-redux';
-import { INITIATE_POST_EDIT, LOGOUT, POST_CLICKED } from '../../redux/constants/actionConstants';
+import {
+  LOGOUT,
+  INITIATE_POST_EDIT,
+  POST_CLICKED,
+  FAB_CLICKED,
+} from '../../redux/constants/actionConstants';
 import { useWindowDimensions } from '../../Hooks/WindowSize';
 
 const Navbar = ({ themeMode, lightMode, darkMode }) => {
@@ -31,19 +36,21 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const hasSelectedEditMode = useSelector((state) => state.user.hasSelectedEditMode);
-  const hasClickedPostBtn = useSelector((state) => state.user.hasClickedPostBtn);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hasRendered, setHasRendered] = useState(false);
   const { width: windowWidth } = useWindowDimensions();
+  const { hasSelectedEditMode, hasClickedPostBtn, hasClickedFab } = useSelector(
+    (state) => state.user
+  );
   const [userFromLocalStorage, setUserFromLocalStorage] = useState(
     JSON.parse(localStorage.getItem('profile'))
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hasRendered, setHasRendered] = useState(false);
 
   // modal operations
   const handleOpen = useCallback(() => {
     setIsModalOpen(true);
     dispatch({ type: POST_CLICKED, payload: false });
+    dispatch({ type: FAB_CLICKED, payload: false });
   }, [dispatch, setIsModalOpen]);
 
   const handleClose = useCallback(() => {
@@ -70,25 +77,27 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
     setUserFromLocalStorage(JSON.parse(localStorage.getItem('profile')));
   }, [location, logout, userFromLocalStorage?.token]);
 
-  // render as edit mode is selected by user
+  // handle modal open/close as edit button is clicked by user
   useEffect(() => {
     if (hasRendered) hasSelectedEditMode ? handleOpen() : handleClose();
     else setHasRendered(true);
   }, [hasSelectedEditMode, handleOpen, handleClose, hasRendered]);
 
-  // render as edit mode is selected by user
+  // handle modal open/close as post/update btn is clicked by user
   useEffect(() => {
     if (hasClickedPostBtn) handleClose();
     else handleOpen();
   }, [hasClickedPostBtn, handleOpen, handleClose]);
 
+  // handle modal open/close as floating action btn is clicked by user
+  useEffect(() => {
+    if (hasClickedFab) handleOpen();
+    else handleOpen();
+  }, [hasClickedFab, handleOpen, handleClose]);
+
   const renderSmallScreen = () => (
     <MUIDrawer
       drawerElements={[
-        <Button className={classes.NavItem} onClick={handleOpen}>
-          <Typography variant='body2'>Create Post</Typography>
-          <AddBoxRoundedIcon />
-        </Button>,
         <Button
           color='inherit'
           className={classes.NavItem}
