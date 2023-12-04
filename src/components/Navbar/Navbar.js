@@ -22,8 +22,8 @@ import MUIDrawer from './Drawer';
 import ModalContainer from '../MdEditor/ModalContainer';
 
 import decode from 'jwt-decode';
-import { useDispatch } from 'react-redux';
-import { LOGOUT } from '../../redux/constants/actionConstants';
+import { useDispatch, useSelector } from 'react-redux';
+import { INITIATE_POST_EDIT, LOGOUT } from '../../redux/constants/actionConstants';
 import { useWindowDimensions } from '../../Hooks/WindowSize';
 
 const Navbar = ({ themeMode, lightMode, darkMode }) => {
@@ -31,32 +31,45 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-
+  const hasSelectedEditMode = useSelector((state) => state.user.hasSelectedEditMode);
   const { width: windowWidth } = useWindowDimensions();
-  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
-  const [open, setOpen] = useState(false);
+  const [userFromLocalStorage, setUserFromLocalStorage] = useState(
+    JSON.parse(localStorage.getItem('profile'))
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hasRendered, setHasRendered] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // modal operations
+  const handleOpen = () => setIsModalOpen(true);
+  const handleClose = useCallback(() => {
+    setIsModalOpen(false);
+    dispatch({ type: INITIATE_POST_EDIT, payload: false });
+  }, [dispatch, setIsModalOpen]);
 
   // logout
   const logout = useCallback(() => {
     dispatch({ type: LOGOUT });
     history.push('/auth');
-    setCurrentUser(null);
-  }, [dispatch, history, setCurrentUser]);
+    setUserFromLocalStorage(null);
+  }, [dispatch, history, setUserFromLocalStorage]);
 
   // render as soon as location changes
   useEffect(() => {
-    const token = currentUser?.token;
+    const token = userFromLocalStorage?.token;
     if (token) {
       const decodedToken = decode(token);
       if (decodedToken.exp * 1000 < new Date().getTime()) {
         logout();
       }
     }
-    setCurrentUser(JSON.parse(localStorage.getItem('profile')));
-  }, [location, logout, currentUser?.token]);
+    setUserFromLocalStorage(JSON.parse(localStorage.getItem('profile')));
+  }, [location, logout, userFromLocalStorage?.token]);
+
+  // render as edit mode is selected by user
+  useEffect(() => {
+    if (hasRendered) hasSelectedEditMode ? handleOpen() : handleClose();
+    else setHasRendered(true);
+  }, [hasSelectedEditMode, handleClose, hasRendered]);
 
   const renderSmallScreen = () => (
     <MUIDrawer
@@ -119,7 +132,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
   const renderModal = () => (
     <Modal
       className={classes.Modal}
-      open={open}
+      open={isModalOpen}
       onClose={handleClose}
       aria-labelledby='parent-modal-title'
       aria-describedby='parent-modal-description'
@@ -138,7 +151,7 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
             <Typography className={classes.Heading} variant='h6'>
               weebook
             </Typography>
-            {currentUser === null ? (
+            {userFromLocalStorage === null ? (
               <Button variant='outlined' component={Link} to='/auth' color='inherit'>
                 Sign in
               </Button>

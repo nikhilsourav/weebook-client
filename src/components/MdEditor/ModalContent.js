@@ -5,40 +5,38 @@ import ClearAllIcon from '@material-ui/icons/ClearAll';
 
 import useStyles from './ModalContentStyles';
 import { createPost, updatePost } from '../../redux/actions/posts';
-import { USER } from '../../redux/constants/actionConstants';
+import { SET_CURRENT_USER_ID } from '../../redux/constants/actionConstants';
 import { useCalcRows } from '../../Hooks/WindowSize';
 
 const Form = () => {
   const { minRows, maxRows } = useCalcRows();
-
   const classes = useStyles();
   const dispatch = useDispatch();
   const userFromLocalStorage = JSON.parse(localStorage.getItem('profile'));
-  const loggedInUserId = useSelector((state) => state.user);
-
-  const selectedPost = useSelector((state) =>
-    loggedInUserId ? state.posts.find((post) => post._id === loggedInUserId) : null
-  );
-
+  const currentUserId = useSelector((state) => state.user.currentUserId);
   const [formData, setFormData] = useState({ title: '', content: '' });
 
-  useEffect(() => {
-    if (selectedPost) setFormData(selectedPost);
-  }, [selectedPost]);
+  const selectedPost = useSelector((state) =>
+    currentUserId ? state.posts.find((post) => post._id === currentUserId) : null
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedData = { ...formData, name: userFromLocalStorage?.result?.name };
-    loggedInUserId
-      ? dispatch(updatePost(loggedInUserId, updatedData))
+    currentUserId
+      ? dispatch(updatePost(currentUserId, updatedData))
       : dispatch(createPost(updatedData));
     clearForm();
   };
 
   const clearForm = () => {
     setFormData({ title: '', content: '' });
-    dispatch({ type: USER, payload: null });
+    dispatch({ type: SET_CURRENT_USER_ID, payload: null });
   };
+
+  useEffect(() => {
+    if (selectedPost) setFormData(selectedPost);
+  }, [selectedPost]);
 
   if (!userFromLocalStorage?.result?.name) {
     return (
@@ -84,9 +82,9 @@ const Form = () => {
         value={formData.content}
         onChange={(e) => setFormData({ ...formData, content: e.target.value })}
       />
-      <Tooltip title={loggedInUserId ? 'Update this!' : 'Post this!'} placement='top'>
+      <Tooltip title={currentUserId ? 'Update this!' : 'Post this!'} placement='top'>
         <Button className={classes.ButtonSubmit} color='primary' variant='contained' type='submit'>
-          {loggedInUserId ? 'UPDATE' : 'POST'}
+          {currentUserId ? 'UPDATE' : 'POST'}
         </Button>
       </Tooltip>
     </form>

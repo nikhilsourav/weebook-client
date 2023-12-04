@@ -7,20 +7,28 @@ import moment from 'moment';
 import useStyles from './IndividualPostStyles';
 import { useDispatch } from 'react-redux';
 import { deletePost, likePost } from '../../redux/actions/posts';
-import { USER } from '../../redux/constants/actionConstants';
+import { INITIATE_POST_EDIT, SET_CURRENT_USER_ID } from '../../redux/constants/actionConstants';
 
 const Post = ({ post }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const userFromLocalStoratge = JSON.parse(localStorage.getItem('profile'));
+  const isCurrentUserCreator = userFromLocalStoratge?.result?.sub === post.creator;
 
-  // Extract date from _id as createdAt is unreliable
-  const dateFromObjectId = (objectId) => new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
-
-  // Get user from localStorage
-  const user = JSON.parse(localStorage.getItem('profile'));
-
-  // Check if the current user is the creator of the post
-  const isCurrentUserCreator = user?.result?.sub === post.creator;
+  const extractDateFromObj = () => {
+    return new Date(parseInt(post._id.substring(0, 8), 16) * 1000);
+  };
+  const handleEdit = () => {
+    dispatch({ type: SET_CURRENT_USER_ID, payload: post._id });
+    dispatch({ type: INITIATE_POST_EDIT, payload: true });
+  };
+  const handleLike = () => {
+    dispatch(likePost(post._id));
+  };
+  const handleDelete = () => {
+    dispatch(deletePost(post._id));
+    dispatch({ type: SET_CURRENT_USER_ID, payload: null });
+  };
 
   return (
     <Card className={classes.root}>
@@ -29,15 +37,12 @@ const Post = ({ post }) => {
           <div className={classes.Info}>
             <Typography className={classes.Name}>{post.name}</Typography>
             <Typography className={classes.CreatedAt}>
-              {moment(dateFromObjectId(post._id)).fromNow()}
+              {moment(extractDateFromObj()).fromNow()}
             </Typography>
           </div>
           <div>
             {isCurrentUserCreator && (
-              <Button
-                className={classes.Edit}
-                onClick={() => dispatch({ type: USER, payload: post._id })}
-              >
+              <Button className={classes.Edit} onClick={handleEdit}>
                 <Tooltip title='edit'>
                   <EditIcon />
                 </Tooltip>
@@ -52,7 +57,7 @@ const Post = ({ post }) => {
       </CardContent>
       <CardActions className={classes.Actions}>
         <Typography>
-          <Button disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
+          <Button disabled={!userFromLocalStoratge?.result} onClick={handleLike}>
             <Tooltip title='like'>
               <FavoriteIcon />
             </Tooltip>
@@ -61,12 +66,7 @@ const Post = ({ post }) => {
           {post.likes.length}
         </Typography>
         {isCurrentUserCreator && (
-          <Button
-            onClick={() => {
-              dispatch(deletePost(post._id));
-              dispatch({ type: USER, payload: null });
-            }}
-          >
+          <Button onClick={handleDelete}>
             <Tooltip title='delete'>
               <DeleteIcon />
             </Tooltip>
