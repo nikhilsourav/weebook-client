@@ -7,21 +7,16 @@ export default makeStyles((theme) => ({
     color: 'rgba(255,255,250,1)',
   },
   Profile: {
-    width: theme.spacing(4),
-    height: theme.spacing(4),
+    width: theme.spacing(3.5),
+    height: theme.spacing(3.5),
   },
   NavItem: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  Link: {
-    textDecoration: 'none',
-    color: '#ffffff',
-    WebkitTapHighlightColor: 'transparent',
-    [theme.breakpoints.down('500')]: {
-      color: 'inherit',
-    },
+    width: '100%',
+    minWidth: '160px',
+    minHeight: '50px',
   },
   Modal: {
     display: 'flex',

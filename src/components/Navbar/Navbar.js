@@ -8,7 +8,6 @@ import {
   Tooltip,
   IconButton,
   Button,
-  Avatar,
   Modal,
   Grid,
 } from '@material-ui/core';
@@ -32,9 +31,11 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
+  const { width: windowWidth } = useWindowDimensions();
+  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -57,60 +58,32 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
     setCurrentUser(JSON.parse(localStorage.getItem('profile')));
   }, [location, logout, currentUser?.token]);
 
-  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
-
   const renderSmallScreen = () => (
     <MUIDrawer
       drawerElements={[
-        <div className={classes.NavItem}>
+        <Button className={classes.NavItem} onClick={handleOpen}>
           <Typography variant='body2'>Create Post</Typography>
-          <Tooltip title='create post'>
-            <IconButton color='inherit' onClick={handleOpen}>
-              <AddBoxRoundedIcon />
-            </IconButton>
-          </Tooltip>
-        </div>,
-        <div className={classes.NavItem}>
+          <AddBoxRoundedIcon />
+        </Button>,
+        <Button
+          color='inherit'
+          className={classes.NavItem}
+          onClick={themeMode === 'light' ? darkMode : lightMode}
+        >
           <Typography variant='body2'>Toggle Theme</Typography>
-          {themeMode === 'light' ? (
-            <IconButton onClick={darkMode} color='inherit'>
-              <Brightness4Icon />
-            </IconButton>
-          ) : (
-            <IconButton onClick={lightMode} color='inherit'>
-              <Brightness7Icon />
-            </IconButton>
-          )}
-        </div>,
-        <div className={classes.NavItem}>
-          <Typography variant='body2'>GitHub repository</Typography>
-          <a
-            href='https://github.com/nikhilsourav/weebook-client'
-            target='_blank'
-            rel='noreferrer'
-            className={classes.Link}
-          >
-            <IconButton color='inherit'>
-              <GitHubIcon />
-            </IconButton>
-          </a>
-        </div>,
-        <div className={classes.NavItem}>
-          <Typography variant='body2'>signed in as</Typography>
-          <IconButton>
-            <Tooltip title={currentUser?.result?.name}>
-              <Avatar className={classes.Profile} alt={currentUser?.result?.name}>
-                {currentUser?.result?.name.charAt(0)}
-              </Avatar>
-            </Tooltip>
-          </IconButton>
-        </div>,
-        <div className={classes.NavItem}>
+          {themeMode === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
+        </Button>,
+        <Button
+          className={classes.NavItem}
+          onClick={() => window.open('https://github.com/nikhilsourav/weebook-client', '_blank')}
+        >
+          <Typography variant='body2'>GitHub Repo</Typography>
+          <GitHubIcon />
+        </Button>,
+        <Button className={classes.NavItem} onClick={logout}>
           <Typography variant='body2'>Sign out</Typography>
-          <IconButton color='inherit' onClick={logout}>
-            <ExitToAppIcon />
-          </IconButton>
-        </div>,
+          <ExitToAppIcon />
+        </Button>,
       ]}
     />
   );
@@ -123,40 +96,23 @@ const Navbar = ({ themeMode, lightMode, darkMode }) => {
         </IconButton>
       </Tooltip>
       <Tooltip title='toggle theme'>
-        {themeMode === 'light' ? (
-          <IconButton onClick={darkMode} color='inherit'>
-            <Brightness4Icon />
-          </IconButton>
-        ) : (
-          <IconButton onClick={lightMode} color='inherit'>
-            <Brightness7Icon />
-          </IconButton>
-        )}
-      </Tooltip>
-      <Tooltip title='GitHub repository'>
-        <a
-          href='https://github.com/nikhilsourav/weebook-client'
-          rel='noreferrer'
-          target='_blank'
-          className={classes.Link}
-        >
-          <IconButton color='inherit'>
-            <GitHubIcon />
-          </IconButton>
-        </a>
-      </Tooltip>
-      <Tooltip title={`signed in as ${currentUser?.result?.name}`}>
-        <IconButton color='inherit'>
-          <Avatar className={classes.Profile} alt={currentUser?.result?.name}>
-            {currentUser?.result?.name.charAt(0)}
-          </Avatar>
+        <IconButton color='inherit' onClick={themeMode === 'light' ? darkMode : lightMode}>
+          {themeMode === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
         </IconButton>
       </Tooltip>
-      <Tooltip title='logout'>
-        <IconButton color='inherit' onClick={logout}>
+      <IconButton
+        color='inherit'
+        onClick={() => window.open('https://github.com/nikhilsourav/weebook-client', '_blank')}
+      >
+        <Tooltip title='GitHub repository'>
+          <GitHubIcon />
+        </Tooltip>
+      </IconButton>
+      <IconButton color='inherit' onClick={logout}>
+        <Tooltip title='logout'>
           <ExitToAppIcon />
-        </IconButton>
-      </Tooltip>
+        </Tooltip>
+      </IconButton>
     </>
   );
 
