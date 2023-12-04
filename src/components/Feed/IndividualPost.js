@@ -1,7 +1,7 @@
 import { Card, Typography, Button, CardContent, CardActions, Tooltip } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import EditIcon from '@material-ui/icons/Edit';
 import moment from 'moment';
 
 import useStyles from './IndividualPostStyles';
@@ -39,7 +39,7 @@ const Post = ({ post }) => {
                 onClick={() => dispatch({ type: USER, payload: post._id })}
               >
                 <Tooltip title='edit'>
-                  <MoreHorizIcon />
+                  <EditIcon />
                 </Tooltip>
               </Button>
             )}
