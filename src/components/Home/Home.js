@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Container, Grid } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import useStyles from './HomeStyles';
 import Posts from '../Feed/PostsFeed';

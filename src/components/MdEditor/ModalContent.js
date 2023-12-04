@@ -6,8 +6,11 @@ import ClearAllIcon from '@material-ui/icons/ClearAll';
 import useStyles from './ModalContentStyles';
 import { createPost, updatePost } from '../../redux/actions/posts';
 import { USER } from '../../redux/constants/actionConstants';
+import { useCalcRows } from '../../Hooks/WindowSize';
 
 const Form = () => {
+  const { minRows, maxRows } = useCalcRows();
+
   const classes = useStyles();
   const dispatch = useDispatch();
   const userFromLocalStorage = JSON.parse(localStorage.getItem('profile'));
@@ -76,7 +79,8 @@ const Form = () => {
         fullWidth
         placeholder={`What's in your mind ${userFromLocalStorage?.result?.given_name} ? 💭`}
         multiline
-        minRows={6}
+        minRows={minRows}
+        maxRows={maxRows}
         value={formData.content}
         onChange={(e) => setFormData({ ...formData, content: e.target.value })}
       />
